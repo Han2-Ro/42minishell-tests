@@ -1,0 +1,10 @@
+.vscode
+*.a
+obj
+/tests/bin
+/tests/files
+*.o
+minishell
+.nfs*
+temp
+minishell_tester
