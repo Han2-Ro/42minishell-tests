@@ -1,7 +1,7 @@
 #!/bin/bash
 FAIL_COUNT=0
 RUN_DIR=temp
-MINISHELL=../minishell/minishell
+MINISHELL=../minishell
 mkdir -p $RUN_DIR
 
 function test {

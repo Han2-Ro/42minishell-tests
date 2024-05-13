@@ -2,7 +2,7 @@ CC=cc
 CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 
-MS_DIR = ../minishell
+MS_DIR = ../
 
 NAME = minishell
 LIB = libminishell.a
