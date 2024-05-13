@@ -35,6 +35,8 @@ function test {
 
 test $'nocmd'
 test $'cd .. \n pwd'
+test $'cd ..'
+test $'pwd'
 test $'ls -l | grep d| wc -l'
 test $'cat << EOF\nhello\nEOF'
 test $'cat << EOF\n$HOME\nhello\nEOF'
