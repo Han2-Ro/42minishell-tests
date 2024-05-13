@@ -24,7 +24,7 @@ TEST_UTILS = $(wildcard $(TEST_DIR)/utils/*.c)
 all: test
 
 minishell:
-	make -C $(MS_DIR)
+	make re -C $(MS_DIR)
 
 $(LIB): $(OBJ_DIR) $(OBJS)
 	make -C $(MS_DIR)/libft
