@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: aprevrha <aprevrha@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:19:38 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/13 13:45:16 by hrother          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:13:12 by aprevrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ int	test_lexer(char **envp)
 {
 	t_list	*token_lst;
 	char	*line;
+	int		status;
 
+	status = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	(void)envp;
 	line = "echo www|cat>out>>END";
-	token_lst = lexer(line);
+	token_lst = lexer(line, &status);
 	ft_lstiter(token_lst, print_token_new);
 	ft_lstclear(&token_lst, free_token);
 	return (SUCCESS);
@@ -32,11 +34,13 @@ int	test_lexer2(char **envp)
 {
 	t_list	*token_lst;
 	char	*line;
+	int		status;
 
+	status = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	(void)envp;
 	line = "ls>out";
-	token_lst = lexer(line);
+	token_lst = lexer(line, &status);
 	ft_lstiter(token_lst, print_token_new);
 	if (ft_lstsize(token_lst) != 2)
 	{

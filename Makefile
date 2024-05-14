@@ -48,11 +48,11 @@ test: $(TESTBINS)
 	exit $$exit_code
 
 clean:
-	make clean -C ./libft
+#	make clean -C $(MS_DIR)/libft
 	$(RM) $(OBJ_DIR)
 
 fclean: clean
-	make fclean -C ./libft
+#	make fclean -C $(MS_DIR)/libft
 	$(RM) $(NAME)
 	$(RM) $(LIB)
 

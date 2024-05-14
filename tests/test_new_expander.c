@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_new_expander.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: aprevrha <aprevrha@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:19:38 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/14 16:05:31 by hrother          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:13:46 by aprevrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	test_expander(char *line, t_list *expected, char **envp)
 	new = ft_lstnew(new_env(ft_strdup("ll"), ft_strdup("ls -l -a")));
 	ft_lstadd_back(&evars.envl, new);
 	log_msg(INFO, "line: '%s'", line);
-	token_lst = lexer(line);
+	token_lst = lexer(line, &evars.status);
 	result = expand_token_list(&token_lst, evars);
 	ft_lstiter(token_lst, print_token_new);
 	printf("Result: %i\n", result);

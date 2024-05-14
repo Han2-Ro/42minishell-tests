@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_funcheck.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: aprevrha <aprevrha@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:20:21 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/14 16:05:31 by hrother          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:11:36 by aprevrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	if (env == NULL)
 		return (ft_lstclear(&evars.envl, free_env), 1);
 	ft_lstadd_back(&evars.envl, ft_lstnew(env));
-	token_lst = lexer(line);
+	token_lst = lexer(line, &evars.status);
 	expand_token_list(&token_lst, evars);
 	ft_lstiter(token_lst, print_token_new);
 	if (token_lst)

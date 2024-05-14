@@ -8,3 +8,4 @@ minishell
 .nfs*
 temp
 minishell_tester
+*out
