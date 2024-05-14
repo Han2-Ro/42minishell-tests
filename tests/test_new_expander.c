@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:19:38 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/13 13:45:16 by hrother          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:05:31 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,26 @@ int	test_expander(char *line, t_list *expected, char **envp)
 	t_evars	evars;
 
 	evars.status = 0;
-	evars.envp = envp_to_list(envp);
-	ft_lstadd_back(&evars.envp, ft_lstnew(new_env(ft_strdup("numbers"),
+	evars.envl = envp_to_list(envp);
+	ft_lstadd_back(&evars.envl, ft_lstnew(new_env(ft_strdup("numbers"),
 				ft_strdup("123456"))));
-	ft_lstadd_back(&evars.envp, ft_lstnew(new_env(ft_strdup("empty"),
+	ft_lstadd_back(&evars.envl, ft_lstnew(new_env(ft_strdup("empty"),
 				ft_strdup(""))));
-	ft_lstadd_back(&evars.envp, ft_lstnew(new_env(ft_strdup("double_quote"),
+	ft_lstadd_back(&evars.envl, ft_lstnew(new_env(ft_strdup("double_quote"),
 				ft_strdup("aaa\"bbb"))));
-	ft_lstadd_back(&evars.envp, ft_lstnew(new_env(ft_strdup("single_quote"),
+	ft_lstadd_back(&evars.envl, ft_lstnew(new_env(ft_strdup("single_quote"),
 				ft_strdup("aaa\'bbb"))));
-	ft_lstadd_back(&evars.envp, ft_lstnew(new_env(ft_strdup("var1"),
+	ft_lstadd_back(&evars.envl, ft_lstnew(new_env(ft_strdup("var1"),
 				ft_strdup("aa $? bb"))));
 	new = ft_lstnew(new_env(ft_strdup("ll"), ft_strdup("ls -l -a")));
-	ft_lstadd_back(&evars.envp, new);
+	ft_lstadd_back(&evars.envl, new);
 	log_msg(INFO, "line: '%s'", line);
 	token_lst = lexer(line);
 	result = expand_token_list(&token_lst, evars);
 	ft_lstiter(token_lst, print_token_new);
 	printf("Result: %i\n", result);
 	result |= compare_token_list(token_lst, expected);
-	ft_lstclear(&evars.envp, free_env);
+	ft_lstclear(&evars.envl, free_env);
 	ft_lstclear(&token_lst, free_token);
 	return (result);
 }
@@ -122,13 +122,14 @@ int	test2(char **envp)
 	return (result);
 }
 
-int test3(char **envp)
+int	test3(char **envp)
 {
 	t_list	*expected;
 	t_token	token1;
-	int result;
+	int		result;
+
 	token1.type = ARG;
-	token1.value ="echo ";
+	token1.value = "echo ";
 	expected = ft_lstnew(&token1);
 	result = test_expander("\"echo \"", expected, envp);
 	return (result);

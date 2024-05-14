@@ -82,7 +82,7 @@ int	test_1cmd(char **envp)
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
-	evars.envp = envp_list;
+	evars.envl = envp_list;
 	evars.tty = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	cmd_list = NULL;
@@ -121,7 +121,7 @@ int	test_2cmds(char **envp)
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
-	evars.envp = envp_list;
+	evars.envl = envp_list;
 	evars.tty = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	cmd_list = NULL;
@@ -158,7 +158,7 @@ int	test_3cmds(char **envp)
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
-	evars.envp = envp_list;
+	evars.envl = envp_list;
 	evars.tty = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	cmd_list = NULL;
@@ -195,7 +195,7 @@ int	test_invalid_cmd(char **envp)
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
-	evars.envp = envp_list;
+	evars.envl = envp_list;
 	evars.tty = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	cmd_list = NULL;
@@ -225,7 +225,7 @@ int	test_noperm_file(char **envp)
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
-	evars.envp = envp_list;
+	evars.envl = envp_list;
 	evars.tty = 0;
 	log_msg(WARNING, "This test needs manual inspection of the output");
 	cmd_list = NULL;
