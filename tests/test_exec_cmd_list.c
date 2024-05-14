@@ -12,7 +12,7 @@
 
 #include "../test.h"
 
-//Moved here because these tests still use some of this old code
+// Moved here because these tests still use some of this old code
 /**
  * @brief Create a new list element
  * @deprecated use ft_lstnew instead
@@ -76,9 +76,8 @@ int	test_1cmd(char **envp)
 	t_list	*envp_list;
 	t_token	redirect;
 	char	**args;
-	t_evars evars;
+	t_evars	evars;
 
-	
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
@@ -92,7 +91,7 @@ int	test_1cmd(char **envp)
 	args[0] = "ls";
 	args[1] = "-l";
 	args[2] = NULL;
-	cmd = new_cmd("/bin/ls", args);
+	cmd = new_cmd(ft_strdup("/bin/ls"), args);
 	if (cmd == NULL)
 		return (ft_lstclear(&envp_list, free_env), free(args), FAILURE);
 	redirect.type = R_OUT;
@@ -115,9 +114,8 @@ int	test_2cmds(char **envp)
 	t_list	*envp_list;
 	char	**args1;
 	char	**args2;
-	t_evars evars;
+	t_evars	evars;
 
-	
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
@@ -129,12 +127,12 @@ int	test_2cmds(char **envp)
 	args1[0] = "ls";
 	args1[1] = "-l";
 	args1[2] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("/bin/ls", args1));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("/bin/ls"), args1));
 	args2 = malloc(sizeof(char *) * 3);
 	args2[0] = "grep";
 	args2[1] = "d";
 	args2[2] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("/bin/grep", args2));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("/bin/grep"), args2));
 	if (!cmd_list || !cmd_list->next || !args1 || !args2)
 		return (ft_lstclear(&envp_list, free_env), ft_lstclear(&cmd_list,
 				free_cmd), FAILURE);
@@ -152,9 +150,8 @@ int	test_3cmds(char **envp)
 	char	**args1;
 	char	**args2;
 	char	**args3;
-	t_evars evars;
+	t_evars	evars;
 
-	
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
@@ -166,17 +163,17 @@ int	test_3cmds(char **envp)
 	args1[0] = "ls";
 	args1[1] = "-l";
 	args1[2] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("ls", args1));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("ls"), args1));
 	args2 = malloc(sizeof(char *) * 3);
 	args2[0] = "grep";
 	args2[1] = "d";
 	args2[2] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("grep", args2));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("grep"), args2));
 	args3 = malloc(sizeof(char *) * 3);
 	args3[0] = "wc";
 	args3[1] = "-l";
 	args3[2] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("wc", args3));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("wc"), args3));
 	ft_lstiter(cmd_list, print_cmd);
 	result = exec_cmd_list(cmd_list, &evars);
 	ft_lstclear(&envp_list, free_env);
@@ -189,9 +186,8 @@ int	test_invalid_cmd(char **envp)
 	t_list	*cmd_list;
 	char	**args;
 	int		result;
-	t_evars evars;
+	t_evars	evars;
 
-	
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
@@ -202,7 +198,7 @@ int	test_invalid_cmd(char **envp)
 	args = malloc(sizeof(char *) * 3);
 	args[0] = "invalid_cmd";
 	args[1] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd("invalid_cmd", args));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("invalid_cmd"), args));
 	ft_lstiter(cmd_list, print_cmd);
 	result = exec_cmd_list(cmd_list, &evars);
 	ft_lstclear(&envp_list, free_env);
@@ -219,9 +215,8 @@ int	test_noperm_file(char **envp)
 	int		result;
 	t_token	redirect;
 	t_cmd	*cmd;
-	t_evars evars;
+	t_evars	evars;
 
-	
 	envp_list = envp_to_list(envp);
 	if (envp_list == NULL)
 		return (FAILURE);
@@ -232,7 +227,7 @@ int	test_noperm_file(char **envp)
 	args = malloc(sizeof(char *) * 3);
 	args[0] = "cat";
 	args[1] = NULL;
-	cmd = new_cmd("cat", args);
+	cmd = new_cmd(ft_strdup("cat"), args);
 	redirect.type = R_IN;
 	redirect.value = "tests/files/no_perm";
 	ft_lstadd_back(&cmd->redirects, ft_lstnew(&redirect));
@@ -254,11 +249,10 @@ int	main(int argc, char **argv, char **envp)
 
 	printf("\n-------- %s --------\n", argv[0]);
 	result |= run_test("test_1cmd", test_1cmd, envp, false);
-	// result |= run_test("test_2cmds", test_2cmds, envp, true);
-	// result |= run_test("test_3cmds", test_3cmds, envp, true);
-	// result |= run_test("test_invalid_cmd", test_invalid_cmd, envp, true);
-	// result |= run_test("test_noperm_file", test_noperm_file, envp, true);
-	// result |= run_test("test_rw_file", test_rw_file, envp, true);
+	result |= run_test("test_2cmds", test_2cmds, envp, true);
+	result |= run_test("test_3cmds", test_3cmds, envp, true);
+	result |= run_test("test_invalid_cmd", test_invalid_cmd, envp, true);
+	result |= run_test("test_noperm_file", test_noperm_file, envp, true);
 	printf("result: %d\n", result != SUCCESS);
 	printf("------------ done ------------\n");
 	return (result != SUCCESS);
