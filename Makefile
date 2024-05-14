@@ -14,6 +14,7 @@ SRCS += $(wildcard $(SRC_DIR)/execution/*.c)
 SRCS += $(wildcard $(SRC_DIR)/builtins/*.c)
 SRCS += $(wildcard $(SRC_DIR)/utils/*.c)
 SRCS += $(wildcard $(SRC_DIR)/expander/*.c)
+SRCS += $(wildcard $(SRC_DIR)/error/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 TEST_DIR = tests
