@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:33:22 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/14 16:46:38 by hrother          ###   ########.fr       */
+/*   Updated: 2024/05/27 17:07:50 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	test_1cmd(char **envp)
 	ft_lstadd_back(&tokens, ft_lstnew(&token[1]));
 	token[2] = (t_token){.type = R_OUT, .value = "out.txt"};
 	ft_lstadd_back(&tokens, ft_lstnew(&token[2]));
-	ft_lstiter(tokens, print_token);
+	ft_lstiter(tokens, print_token_new);
 	cmds = parse(tokens);
 	ft_lstclear(&tokens, pass);
 	ft_lstiter(cmds, print_cmd);
@@ -106,7 +106,7 @@ int	test_3cmd(char **envp)
 	ft_lstadd_back(&tokens, ft_lstnew(&token[9]));
 	token[10] = (t_token){.type = R_OUT, .value = "out2.txt"};
 	ft_lstadd_back(&tokens, ft_lstnew(&token[10]));
-	ft_lstiter(tokens, print_token);
+	ft_lstiter(tokens, print_token_new);
 	if (ft_lstsize(tokens) != 11)
 		return (ft_lstclear(&tokens, pass), FAILURE);
 	cmds = parse(tokens);
