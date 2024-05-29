@@ -56,5 +56,7 @@ test $'/ls'
 test $'./ls -la'
 test $'example_bin'
 test $'./example_bin'
-#test $'>temp/out_920 | ls -l temp/\nrm temp/out_920'
+test $'>temp/out_920 | ls -l temp/out_920\nrm temp/out_920'
+test $'echo 1\nexit 42\necho 2'
+test $'echo 1\nexit \necho 2'
 exit $FAIL_COUNT
