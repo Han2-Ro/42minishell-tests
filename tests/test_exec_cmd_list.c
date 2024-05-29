@@ -201,7 +201,7 @@ int	test_invalid_cmd(char **envp)
 	cmd_list = ft_lstadd(&cmd_list, new_cmd(NULL, args));
 	ft_lstiter(cmd_list, print_cmd);
 	result = exec_cmd_list(cmd_list, &evars);
-	if (evars.is_child)
+	if (evars.state == CHILD)
 	{
 		log_msg(INFO, "status in child: %d\n", evars.status);
 		exit(evars.status);
