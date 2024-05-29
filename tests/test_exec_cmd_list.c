@@ -198,10 +198,16 @@ int	test_invalid_cmd(char **envp)
 	args = malloc(sizeof(char *) * 3);
 	args[0] = "invalid_cmd";
 	args[1] = NULL;
-	cmd_list = ft_lstadd(&cmd_list, new_cmd(ft_strdup("invalid_cmd"), args));
+	cmd_list = ft_lstadd(&cmd_list, new_cmd(NULL, args));
 	ft_lstiter(cmd_list, print_cmd);
 	result = exec_cmd_list(cmd_list, &evars);
+	if (evars.is_child)
+	{
+		log_msg(INFO, "status in child: %d\n", evars.status);
+		exit(evars.status);
+	}
 	ft_lstclear(&envp_list, free_env);
+	log_msg(INFO, "statusssss: %d\n", evars.status);
 	if (evars.status != 127)
 		result = FAILURE;
 	return (result);
