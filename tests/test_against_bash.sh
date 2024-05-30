@@ -33,7 +33,7 @@ function test {
         echo "minishell: $exit_minishell"
         FAIL_COUNT=$((FAIL_COUNT+1))
     fi
-    echo $'\n'
+    echo $'----------------------------'
 }
 
 test $'nocmd'
@@ -45,13 +45,15 @@ test $'no_cmd\necho $?aaa'
 test $'echo $"HOME"$USER'
 test $'echo "$ x"'
 test $'echo $>temp/out_41 | cat -e temp/out_41'
-test $'export var \n export |grep var \n env| grep var '
+
+#expander
 test $'export a="echo hi"\n$a "<d"|cat -e'
 test $'export a="aa\'bb"\necho $a'
 test $'export var=\'aa $? bb\'\necho $var'
 test $'export a=\' 1\'\nexport b=\'2 \'\nexport c=\'3 3\'\necho $a$b$c'
 test $'export a="  "\necho $a 12$a"34"'
 test $'export a="  "\n$a echo hi'
+
 test $'/ls'
 test $'./ls -la'
 test $'example_bin'
@@ -63,6 +65,8 @@ test $'echo 1\nexit 42\necho 2'
 test $'echo 1\nexit \necho 2'
 test $'echo 1\nexit aa \necho 2'
 test $'echo 1\nexit 1 2 \necho 2'
+test $'ls | exit 42 \n echo $?'
+test $'exit 42 | ls no-file \n echo $?'
 test $'cd .. \n pwd'
 test $'cd no_dir'
 test $'cd files ..'
@@ -71,4 +75,9 @@ test $'pwd arg'
 test $'echo'
 test $'echo -nnn -nn nn -nn hello -n | cat -e'
 #test $'mkdir a\n cd a\n mkdir b \n cd b \n rm -r ../../a \n pwd \n cd .. \n cd $HOME \n pwd'
+test $'export var \n export |grep var \n env| grep var '
+test $'export var=123 \n export var \n echo $var'
+test $'export var=123 | cat \n echo var: $var' 
+test $'export 1var=abc'
+
 exit $FAIL_COUNT
