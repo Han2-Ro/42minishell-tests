@@ -79,5 +79,6 @@ test $'export var \n export |grep var \n env| grep var '
 test $'export var=123 \n export var \n echo $var'
 test $'export var=123 | cat \n echo var: $var' 
 test $'export 1var=abc'
+test $'export Var1=123 Var2=456 \n unset Var1 | env | grep Var \n unset Var1 Var2 \n env | grep Var'
 
 exit $FAIL_COUNT
