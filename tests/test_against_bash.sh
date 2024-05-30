@@ -10,9 +10,11 @@ function test {
     exit_bash=$?
     echo "$1" | $MINISHELL > $RUN_DIR/minishell.out 2> $RUN_DIR/minishell.err
     exit_minishell=$?
+    cat $RUN_DIR/minishell.out
+    cat $RUN_DIR/minishell.err
     DIFF=$(diff $RUN_DIR/bash.out $RUN_DIR/minishell.out)
     if [ "$DIFF" != "" ]; then
-        echo "stdout diff:"
+        echo "DIFF stdout:"
         echo $DIFF
         FAIL_COUNT=$((FAIL_COUNT+1))
     fi
@@ -20,23 +22,21 @@ function test {
     if [ "$DIFF" != "" ]; then
         # error message may differ
         if [ $(cat $RUN_DIR/bash.err | wc -l) != $(cat $RUN_DIR/minishell.err | wc -l) ]; then
-            echo "stderr diff:"
+            echo "DIFF stderr:"
             echo $DIFF
             FAIL_COUNT=$((FAIL_COUNT+1))
         fi
     fi
     if [ $exit_bash != $exit_minishell ]; then
-        echo "exit code diff:"
+        echo "DIFF exit code:"
         echo "bash: $exit_bash"
         echo "minishell: $exit_minishell"
         FAIL_COUNT=$((FAIL_COUNT+1))
     fi
+    echo $'\n'
 }
 
 test $'nocmd'
-test $'cd .. \n pwd'
-test $'cd ..'
-test $'pwd'
 test $'ls -l | grep d| wc -l'
 test $'cat << EOF\nhello\nEOF'
 test $'cat << EOF\n$HOME\nhello\nEOF'
@@ -45,7 +45,7 @@ test $'no_cmd\necho $?aaa'
 test $'echo $"HOME"$USER'
 test $'echo "$ x"'
 test $'echo $>temp/out_41 | cat -e temp/out_41'
-test $'export no_val \n export |grep no_val \n env| grep no_val '
+test $'export var \n export |grep var \n env| grep var '
 test $'export a="echo hi"\n$a "<d"|cat -e'
 test $'export a="aa\'bb"\necho $a'
 test $'export var=\'aa $? bb\'\necho $var'
@@ -57,6 +57,18 @@ test $'./ls -la'
 test $'example_bin'
 test $'./example_bin'
 test $'>temp/out_920 | ls -l temp/out_920\nrm temp/out_920'
+
+#builtins
 test $'echo 1\nexit 42\necho 2'
 test $'echo 1\nexit \necho 2'
+test $'echo 1\nexit aa \necho 2'
+test $'echo 1\nexit 1 2 \necho 2'
+test $'cd .. \n pwd'
+test $'cd no_dir'
+test $'cd files ..'
+test $'cd .. | cat \n pwd'
+test $'pwd arg'
+test $'echo'
+test $'echo -nnn -nn nn -nn hello -n | cat -e'
+#test $'mkdir a\n cd a\n mkdir b \n cd b \n rm -r ../../a \n pwd \n cd .. \n cd $HOME \n pwd'
 exit $FAIL_COUNT
