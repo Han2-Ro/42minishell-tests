@@ -81,4 +81,7 @@ test $'export var=123 | cat \n echo var: $var'
 test $'export 1var=abc'
 test $'export Var1=123 Var2=456 \n unset Var1 | env | grep Var \n unset Var1 Var2 \n env | grep Var'
 
+#here_doc
+test $'<< EOF cat -e\nhello\nEOF'
+
 exit $FAIL_COUNT
