@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   test_envp_to_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:19:38 by hrother           #+#    #+#             */
-/*   Updated: 2024/05/13 13:45:16 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/09 11:28:07 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../test.h"
+
+void	print_env(void *content)
+{
+	t_env	*env;
+
+	env = (t_env *)content;
+	log_msg(DEBUG, "%s=%s", env->key, env->value);
+}
 
 int	test_real(char **envp)
 {
