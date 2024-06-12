@@ -1,14 +1,14 @@
-CC=cc
-CFLAGS = -Wall -Wextra -Werror -g
-RM = rm -rf
-
 MS_DIR = ../
+
+CC=cc
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+RM = rm -rf
 
 NAME = minishell
 LIB = libminishell.a
 
-SRC_DIR = $(MS_DIR)/src
-OBJ_DIR = $(MS_DIR)/obj
+SRC_DIR = $(MS_DIR)src
+OBJ_DIR = $(MS_DIR)obj
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 SRCS += $(wildcard $(SRC_DIR)/execution/*.c)
 SRCS += $(wildcard $(SRC_DIR)/builtins/*.c)
@@ -24,10 +24,10 @@ TEST_UTILS = $(wildcard $(TEST_DIR)/utils/*.c)
 
 all: test
 
-minishell:
-	make re -C $(MS_DIR)
+$(NAME):
+	make re -C $(MS_DIR) CFLAGS="$(CFLAGS) -I./includes"
 
-$(LIB): $(OBJ_DIR) $(OBJS)
+$(LIB):
 	make -C $(MS_DIR)/libft
 	ar rcs $@ $(OBJS)
 
@@ -37,8 +37,7 @@ $(TEST_DIR)/bin:
 $(TEST_DIR)/bin/%: $(TEST_DIR)/%.c $(LIB) $(TEST_DIR)/bin
 	$(CC) $(CFLAGS) $< -o $@ -L. -lminishell -lreadline -L$(MS_DIR)/libft -lft
 
-test: CFLAGS += -DLOG_LEVEL=DEBUG
-test: $(TESTBINS)
+test: $(NAME) $(TESTBINS)
 	./$(TEST_DIR)/setup.sh; \
 	exit_code=0; \
 	for test in $(TESTBINS); do \

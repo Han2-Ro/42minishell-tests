@@ -84,4 +84,6 @@ test $'export Var1=123 Var2=456 \n unset Var1 | env | grep Var \n unset Var1 Var
 #here_doc
 test $'<< EOF cat -e\nhello\nEOF'
 
+test $'echo e\''
+
 exit $FAIL_COUNT
